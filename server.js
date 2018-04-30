@@ -2,20 +2,20 @@ const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
 
-const port = process.env.port || 5000;
+const port = process.env.PORT || 5000;
 let app = express();
 
 hbs.registerPartials(__dirname + '/views/partials');
-hbs.registerHelper("getCurrentyear", () => {
+hbs.registerHelper("getCurrentYear", () => {
     new Date().getFullYear();
 });
 app.set('view engine', 'hbs');
 app.use(express.static(__dirname + '/public'));
 
 app.use((req, res, next) => {
-    let log = `${new Date().toString} ${req.method}  ${req.path} ` + '\n';
+    let log = `${new Date().toString} ${req.method}  ${req.path}  \n`;
     fs.appendFile('server.log', log, (error) => {
-        console.log("can not write to the file")
+        console.log("can not write to the file");
     });
     next();
 });
